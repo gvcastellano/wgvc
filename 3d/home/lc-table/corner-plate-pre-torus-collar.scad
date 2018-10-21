@@ -9,7 +9,7 @@ pole_mount_id = 0.3;
 pole_mount_od =.5;
 pole_mount_h = 3;
 
-theta = 30;
+theta = 60;
 phi = atan(48/30);
 
 fillet_r = 0.1;
@@ -22,7 +22,6 @@ fillet_z = fillet_r*(1+cos(theta));
 
 
 module torus_fillet() {
-  translate([0, 0, fillet_z])
               difference() {
               translate([ 0, 0, -fillet_z])
                 cylinder(h=fillet_z, r=pole_mount_od/2+fillet_z, center = false);
@@ -37,22 +36,18 @@ module torus_fillet() {
             }
           }
 
-plate_mink=0.2;
-
 module stress_collar(){
 color("lightblue")
-    translate ([0,(corner_base_thickness-plate_mink)/tan(theta),.0+corner_base_thickness])
+    translate ([0,corner_base_thickness/tan(theta),.0+corner_base_thickness])
+      linear_extrude(height = fillet_z, 
+                center = false, convexity = 10, slices = 20 )
 //        hull() {
 //          scale([1,1/sin(theta),1])
 //            circle(d=pole_mount_od);
           translate([0,fillet_z/tan(theta),0])
             union() {
-              scale([1,1/sin(theta),1]) {
-              torus_fillet();
-              linear_extrude(height = fillet_z, 
-                center = false, convexity = 10, slices = 20 )
+              scale([1,1/sin(theta),1])
                 circle(d=pole_mount_od);
-              }
           //module torus2(r1, r2)
           //{
           //  rotate_extrude() translate([r1,0,0]) circle(r2);
@@ -62,26 +57,12 @@ color("lightblue")
 //        }
     }
 
-
-translate([0,0,-plate_mink*0.75])
-    {
+if(0) {
 rotate([0,0,phi]) stress_collar();
-    translate([0,0,plate_mink]){
-   difference()
     {
-    {
-      minkowski() {
-        translate([-corner_base_h/2+plate_mink/2, -corner_base_h/2+plate_mink/2, corner_base_thickness/2-plate_mink])
-          cube([corner_base_h-plate_mink, corner_base_h-plate_mink, corner_base_thickness/2-plate_mink/2], center = false);
-        sphere(plate_mink/2);}
+      translate([-corner_base_h/2, -corner_base_h/2, 0])
+        cube([corner_base_h, corner_base_h, corner_base_thickness], center = false);
 
-      }
-            translate([-corner_base_h/2, -corner_base_h/2, -corner_base_thickness/2-.05])
-        cube([corner_base_h, corner_base_h, corner_base_thickness/2], center = false);
-
-//      translate([-corner_base_h/2, -corner_base_h/2, -corner_base_thickness*2])
-//        cube([corner_base_h, corner_base_h, corner_base_thickness/2], center = false);
-    }
       difference() {
         rotate([-90+theta, 0, phi])
           difference() 
@@ -95,6 +76,7 @@ rotate([0,0,phi]) stress_collar();
     }
   }
 
-//stress_collar();
+
+stress_collar();
 
 

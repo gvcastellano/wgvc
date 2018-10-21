@@ -12,3 +12,12 @@ module cube_mount (h=1, d=1){
     cylinder(h, d=d, true, $fn = 60);
   }
 }
+module prism_mount (h=1, w=1, d=1){
+  difference(){
+    translate ([0,0,h/2])
+    cube([w, w, h], true);
+
+  //    rotate([0,90,0])
+    cylinder(h, d=d, true, $fn = 60);
+  }
+}
