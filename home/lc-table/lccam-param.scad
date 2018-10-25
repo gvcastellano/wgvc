@@ -2,7 +2,7 @@
 //translate ([0,1.525,0])
 //  square( size = .1, center = false);
 
-lens=.2;
+lens=.8;
 thickness = 0.0625;
 eps=.01;
 base_length = 1.7;
@@ -12,8 +12,8 @@ rear_tab_length = 1;
   // Length of tab extended from rear of housing
 rear_tab_thickness = thickness;
 
-wire_port_w = 3/8;
-wire_port_h = 1/4;
+wire_port_w = .385;
+wire_port_h = .18;
   // Size of rear opening for camera
   //  connector
   
@@ -82,6 +82,7 @@ module main_box() {
   translate([lens,thickness+1.3,thickness])mount();
 }
 
+scale(25.4) {
 difference() {
   {
     union() {
@@ -127,3 +128,4 @@ rotate([180,0,0]){
   translate([lens,thickness+1.3,thickness+1.3])mount();
   translate([lens,thickness,thickness+1.3])mount();  
   }
+}
