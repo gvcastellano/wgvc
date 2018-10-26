@@ -2,16 +2,16 @@ include <screw-mount.scad>
 include <lc-table-params.scad>
 include <MCAD/regular_shapes.scad>
 
-bolt_head_inset = 1/32;
-
+bolt_head_inset = 3/64;
+scale(25.4){
 translate ([cam_w/2, cam_h/2, brace_thickness])
-  cube_mount ( h=cam_mount_h, d=cam_mount_hole_dia );
+  prism_mount ( h=cam_mount_h, w=cam_mount_w, d=cam_mount_hole_dia );
 translate ([-cam_w/2, cam_h/2, brace_thickness])
-  cube_mount ( h=cam_mount_h, d=cam_mount_hole_dia );
+  prism_mount ( h=cam_mount_h, w=cam_mount_w, d=cam_mount_hole_dia );
 translate ([cam_w/2, -cam_h/2, brace_thickness])
-  cube_mount ( h=cam_mount_h, d=cam_mount_hole_dia );
+  prism_mount ( h=cam_mount_h, w=cam_mount_w, d=cam_mount_hole_dia );
 translate ([-cam_w/2, -cam_h/2, brace_thickness])
-  cube_mount ( h=cam_mount_h, d=cam_mount_hole_dia );
+  prism_mount ( h=cam_mount_h, w=cam_mount_w, d=cam_mount_hole_dia );
 
 
 difference () {
@@ -31,4 +31,5 @@ difference () {
         cylinder( h=brace_thickness, d=hole_dia, center=false, $fn=60 );
       }
   }
+}
 }
